@@ -1,0 +1,55 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "open-seo",
+  "main": "src/server.ts",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true,
+  },
+  "routes": [
+    {
+      "pattern": "app.openseo.so",
+      "custom_domain": true,
+    },
+    {
+      "pattern": "www.app.openseo.so",
+      "custom_domain": true,
+    },
+  ],
+  "workflows": [
+    {
+      "name": "site-audit-workflow",
+      "binding": "SITE_AUDIT_WORKFLOW",
+      "class_name": "SiteAuditWorkflow",
+    },
+    {
+      "name": "rank-check-workflow",
+      "binding": "RANK_CHECK_WORKFLOW",
+      "class_name": "RankCheckWorkflow",
+    },
+  ],
+  "triggers": {
+    "crons": ["*/15 * * * *"],
+  },
+  "kv_namespaces": [
+    {
+      "binding": "KV",
+      "id": "163bb5133db04b808bb95ccf53aa9a8b",
+    },
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "open-seo",
+      "database_id": "e8547c18-4fff-49da-b906-3df28803a85e",
+      "migrations_dir": "drizzle",
+    },
+  ],
+  "r2_buckets": [
+    {
+      "bucket_name": "open-seo",
+      "binding": "R2","preview_bucket_name": "open-seo",
+    },
+  ],
+}
